@@ -1,5 +1,5 @@
 const express = require('express');
-const { getStats, addUser, addStore, getUsers, getStores, updateStore } = require('../controllers/admin.controller'); // updateStore import karein
+const { getStats, addUser, addStore, getUsers, getStores, updateStore } = require('../controllers/admin.controller');
 const { verifyToken, requireRole } = require('../middleware/auth.middleware');
 const { validateUserInput } = require('../middleware/validate.middleware');
 
