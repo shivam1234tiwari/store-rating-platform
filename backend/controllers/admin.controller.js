@@ -63,20 +63,14 @@ exports.getStores = async (req, res) => {
     }
 };
 
-// --- Naya function store owner update/assign karne ke liye ---
 exports.updateStore = async (req, res) => {
     try {
         const storeId = req.params.id;
         const { owner_id } = req.body;
-        if (typeof Store.updateOwner === 'function') {
-            await Store.updateOwner(storeId, owner_id || null);
-        } else if (typeof Store.update === 'function') {
-            await Store.update(storeId, { owner_id: owner_id || null });
-        } else {
-            const db = require('../config/db'); 
-            await db.query('UPDATE stores SET owner_id = ? WHERE id = ?', [owner_id || null, storeId]);
-        }
 
+        const db = require('../config/db');
+        await db.query('UPDATE stores SET owner_id = ? WHERE id = ?', [owner_id || null, storeId]);
+        
         res.json({ message: 'Store owner updated successfully' });
     } catch (err) {
         res.status(500).json({ error: err.message });
