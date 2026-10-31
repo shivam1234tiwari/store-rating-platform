@@ -96,6 +96,31 @@ export default function AdminDashboard() {
         }
     };
 
+    // Assign / Update Store Owner Handler
+    const handleAssignOwner = async (storeId, ownerId) => {
+        setError(''); setSuccess('');
+        try {
+            const res = await fetch(`http://localhost:5000/api/admin/stores/${storeId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify({ owner_id: ownerId ? Number(ownerId) : null })
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error || 'Failed to update store owner');
+
+            setSuccess('Store owner updated successfully!');
+            fetchData();
+        } catch (err) {
+            setError(err.message);
+        }
+    };
+
+    // Filter store owners for selection
+    const storeOwners = users.filter(u => u.role === 'store_owner');
+
     return (
         <div className="min-h-screen bg-gray-50 p-6">
             <div className="flex justify-between items-center mb-6 bg-white p-4 rounded shadow">
@@ -146,7 +171,12 @@ export default function AdminDashboard() {
                     <input type="text" placeholder="Store Name" className="w-full border p-2 mb-3 rounded" value={newStore.name} onChange={e => setNewStore({...newStore, name: e.target.value})} required />
                     <input type="email" placeholder="Store Email" className="w-full border p-2 mb-3 rounded" value={newStore.email} onChange={e => setNewStore({...newStore, email: e.target.value})} required />
                     <input type="text" placeholder="Address" className="w-full border p-2 mb-3 rounded" value={newStore.address} onChange={e => setNewStore({...newStore, address: e.target.value})} required />
-                    <input type="number" placeholder="Owner User ID (optional)" className="w-full border p-2 mb-3 rounded" value={newStore.owner_id} onChange={e => setNewStore({...newStore, owner_id: e.target.value})} />
+                    <select className="w-full border p-2 mb-3 rounded bg-white" value={newStore.owner_id} onChange={e => setNewStore({...newStore, owner_id: e.target.value})}>
+                        <option value="">-- Assign Owner (Optional) --</option>
+                        {storeOwners.map(owner => (
+                            <option key={owner.id} value={owner.id}>{owner.name} ({owner.email})</option>
+                        ))}
+                    </select>
                     <button type="submit" className="w-full bg-green-600 text-white p-2 rounded hover:bg-green-700 font-semibold">Add Store</button>
                 </form>
             </div>
@@ -217,6 +247,7 @@ export default function AdminDashboard() {
                                 <th className="p-2 text-left">Email</th>
                                 <th className="p-2 text-left">Address</th>
                                 <th className="p-2 text-left">Overall Rating</th>
+                                <th className="p-2 text-left">Assign Store Owner</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -226,6 +257,18 @@ export default function AdminDashboard() {
                                     <td className="p-2">{s.email}</td>
                                     <td className="p-2">{s.address}</td>
                                     <td className="p-2 font-bold text-blue-600">{Number(s.rating).toFixed(1)} / 5</td>
+                                    <td className="p-2">
+                                        <select 
+                                            className="border p-1.5 rounded text-sm bg-white"
+                                            value={s.owner_id || ''}
+                                            onChange={(e) => handleAssignOwner(s.id, e.target.value)}
+                                        >
+                                            <option value="">-- No Owner --</option>
+                                            {storeOwners.map(owner => (
+                                                <option key={owner.id} value={owner.id}>{owner.name}</option>
+                                            ))}
+                                        </select>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
