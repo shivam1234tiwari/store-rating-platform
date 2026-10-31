@@ -62,13 +62,7 @@ store-rating-platform/
 
 ## Quick Start Guide
 
-### 1. Database Setup
-Create MySQL database and tables using `schema.sql`:
-```bash
-mysql -u root -p < schema.sql
-```
-
-### 2. Backend Setup
+### 1. Backend Setup
 ```bash
 cd backend
 cp .env.example .env
@@ -78,7 +72,7 @@ npm run seed     # Seed default admin user
 npm run dev      # Start server on http://localhost:5000
 ```
 
-### 3. Frontend Setup
+### 2. Frontend Setup
 ```bash
 cd frontend
 cp .env.example .env
@@ -89,3 +83,17 @@ npm run dev      # Start Vite frontend on http://localhost:5173
 ## Default Credentials
 - **Admin Email:** `admin@storeplatform.com`
 - **Admin Password:** `Admin@123`
+
+<img width="1300" height="750" alt="Screenshot 2026-10-31 122426" src="https://github.com/user-attachments/assets/625701da-0234-4807-838d-19f62069d22c" />
+
+<img width="1311" height="697" alt="Screenshot 2026-10-31 122711" src="https://github.com/user-attachments/assets/71f8f059-01ac-4682-bb9f-99292889ed5d" />
+
+<img width="1535" height="730" alt="Screenshot 2026-10-31 122917" src="https://github.com/user-attachments/assets/8f976f65-71af-422a-a857-68dddf006cbb" />
+
+<img width="1533" height="725" alt="Screenshot 2026-10-31 123356" src="https://github.com/user-attachments/assets/ab8a2f6b-37b4-431a-a0ba-6e228371369f" />
+
+<img width="1535" height="735" alt="Screenshot 2026-10-31 132832" src="https://github.com/user-attachments/assets/4a2a950b-f5f6-4c50-8019-f249ec8aeca7" />
+
+
+
+
